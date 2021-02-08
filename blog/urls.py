@@ -1,8 +1,8 @@
 from django.urls import path
-from 
+from .views import HomeView
 
 
 #url patterns for the blog application
 urlpatterns = [
-	path("",)
+	path("",HomeView.as_view(),name="blog_home"),
 ]
