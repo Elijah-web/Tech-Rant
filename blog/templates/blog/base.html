@@ -37,6 +37,7 @@
 <body>
 
   <!-- Navigation -->
+{%if user.is_authenticated%}
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
       <a class="navbar-brand" href="{% url 'blog:blog_home'%}"><img style="height: 40px; width: 40px;" src="{% static 'blog/img/40px.png'%}"> Tech Rant</a>
@@ -50,15 +51,59 @@
             <a class="nav-link" href="{% url 'blog:blog_home'%}">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="about.html">About</a>
+            <a class="nav-link" href="{% url 'blog:aboutme'%}">About Me</a>
+          </li>
+          <li class ="nav-item">
+            <a class="nav-link" href="{% url 'logout'%}">Log out</a>
+          </li>
+          <li class ="nav-item">
+            <a class="nav-link" href="{% url 'profile'%}">Profile</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="contact.html">Contact</a>
+           <form class="form-inline" action="" method="POST">
+            {% csrf_token %}
+              <input class="form-control mr-sm-2" name="q" type="text" placeholder="Search posts...">
+              <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+            </form>
           </li>
         </ul>
       </div>
     </div>
   </nav>
+{%else%}
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'blog:blog_home'%}"><img style="height: 40px; width: 40px;" src="{% static 'blog/img/40px.png'%}"> Tech Rant</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'blog:blog_home'%}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'blog:aboutme'%}">About Me</a>
+          </li>
+          <li class ="nav-item">
+            <a class="nav-link" href="{% url 'login'%}">Sign In</a>
+          </li>
+          <li class ="nav-item">
+            <a class="nav-link" href="{% url 'register'%}">Sign Up</a>
+          </li>
+          <li class="nav-item">
+           <form class="form-inline" action="" method="POST">
+            {% csrf_token %}
+              <input class="form-control mr-sm-2" name="q" type="text" placeholder="Search posts...">
+              <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+            </form>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+{% endif %}
 {% block content%}
 {% endblock %}
   <!-- Footer -->
@@ -92,7 +137,11 @@
               </a>
             </li>
           </ul>
-          <p class="copyright text-muted">Copyright &copy; Your Website 2020</p>
+          <p class="copyright text-muted">Copyright &copy; Tech Rant <span id="demo"></span></p>
+          <script type="text/javascript">
+              var d = new Date();
+              document.getElementById("demo").innerHTML = d.getFullYear();
+          </script>
         </div>
       </div>
     </div>

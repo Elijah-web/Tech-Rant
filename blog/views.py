@@ -1,6 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
-from .models import Post
+from django.http import HttpResponseRedirect
+from django.core.mail import send_mail
+from django.urls import reverse
+from django.contrib import messages
+from .models import Post,Comment, Contact
 # Create your views here.
 
 class HomeView(generic.ListView):
@@ -15,7 +19,44 @@ class HomeView(generic.ListView):
     #     context['title'] = "&C"
     #     return context
 
-class DetailView(generic.DetailView):
-    template_name = 'blog/detail.html'
-    model = Post
-    context_object_name = 'post'
+def detailview(request,post_id):
+    post = get_object_or_404(Post,pk=post_id)
+    comments = post.comment_set.all().order_by("-date_posted")
+
+    context = {
+        "post":post,
+        "comments":comments
+    }
+    return render(request,'blog/detail.html',context)
+
+def commentview(request,post_id):
+    post = get_object_or_404(Post,pk=post_id)
+    content = request.POST["comment"]
+    author = request.user
+    the_comment = Comment.objects.create(
+        content=content,
+        post=post,
+        author=author
+        )
+    the_comment.save()
+    return HttpResponseRedirect(reverse('blog:post_detail', args=([post.id])))
+
+def aboutmeview(request):
+    if request.method == "POST":
+        message = request.POST['message']
+        email = request.POST['email']
+        subject = request.POST['subject']
+
+        # send_mail(
+        #     subject,
+        #     message+"\n Sender's email: "+email,
+        #     'elijahokellp@gmail.com',
+        #     ['elijahokello90@gmail.com'],
+        #     fail_silently=False,
+        #     )
+        contact = Contact.objects.create(email=email,message=message,subject=subject)
+        contact.save()
+        messages.success(request, f'Your message has been received successfully')
+        return HttpResponseRedirect(reverse('blog:aboutme'))
+    else:
+        return render(request,'blog/about_me.html')

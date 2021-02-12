@@ -1,8 +1,26 @@
 {% extends "blog/base.html" %}
 {% load crispy_forms_tags %}
+{% load static%}
 {% block content %}
-<br><br><br><br>
-    <div class="container content-section">
+  <header class="masthead" style="height:100px; background-image: url('{%static 'blog/img/home-bg.jpg'%}')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <!-- <img style="height: 120px; width: 120px;" src="{% static 'blog/img/120px.png'%}"> -->
+            <!-- <h1>Tech Rant</h1>     -->
+            <!-- <span class="subheading">Screaming about technology daily</span> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+ <!-- Main Content -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
         <form method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
@@ -10,7 +28,7 @@
                 {{ form|crispy }}
             </fieldset>
             <div class="form-group">
-                <button class="btn btn-danger" type="submit">Sign Up</button>
+                <button class="btn btn-primary" type="submit">Sign Up</button>
             </div>
         </form>
         <div class="border-top pt-3">
@@ -19,4 +37,6 @@
             </small>
         </div>
     </div>
+  </div>
+</div>
 {% endblock content %}

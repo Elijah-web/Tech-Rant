@@ -60,10 +60,44 @@
           <p>Placeholder text by
             <a href="http://spaceipsum.com/">Space Ipsum</a>. Photographs by
             <a href="https://www.flickr.com/photos/nasacommons/">NASA on The Commons</a>.</p>
+          <hr>
+          <div class="container">
+            <h3 id="x">Comments</h3>
+            <p id="demo1"></p>
+            <form method="post" class="example" action="{%url 'blog:comment' post.id%}">
+              {% csrf_token %}
+              <input id="comment-input" onfocus="check();" type="text" placeholder="Add Comment" name="comment">
+              <button id="frm-btn" type="submit"><i class="fas fa-paper-plane"></i></button>
+            </form>
+            {% for comment in comments%}
+              <div class="container20">
+                <span style="font-size: 13px;" class="text-primary"><strong>{{comment.author.username}}</strong></span>
+                <span style="font-size: 13px;"> {{comment.date_posted}}</span><hr>
+                <p class="small">{{comment.content}}</p>
+              </div>
+            {% endfor %}
+          </div>
         </div>
       </div>
     </div>
   </article>
-
   <hr>
+  <script type="text/javascript">
+    function check(){
+      var is_authenticated = {%if user.is_authenticated%}1{% else %}0{%endif%};
+      var msg = document.getElementById("demo1");
+      if(is_authenticated)
+      {
+        msg.className = "small text-center text-success";
+        msg.innerHTML = "You're logged in! <li class=\"fa fa-check-circle\"></li>";
+      }
+      else
+      {
+        msg.className = "small text-center text-danger";
+        msg.innerHTML = "Please login to be able to comment! <li class=\"fas fa-frown\"></li> <a href=\"{%url 'login' %}?next=/detail/{{post.id}}#x\">Log In</a>";
+        document.getElementById("comment-input").disabled = true;
+        document.getElementById("frm-btn").disabled = true;
+      }
+    }
+  </script>
 {% endblock %}
