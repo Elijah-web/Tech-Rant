@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
 from django.urls import reverse
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from .models import Post,Comment, Contact
 # Create your views here.
 
@@ -60,3 +61,23 @@ def aboutmeview(request):
         return HttpResponseRedirect(reverse('blog:aboutme'))
     else:
         return render(request,'blog/about_me.html')
+
+@login_required
+def postcreateview(request):
+    if request.method == "POST":
+        post_content = request.POST["content"];
+        post_title = request.POST["title"]
+        post_subtitle = request.POST["subtitle"]
+        post_author = request.user
+
+        if post_author.is_superuser:
+            publish = True
+            post = Post.objects.create(title=post_title,subtitle=post_subtitle,content=post_content,publish=publish,author=post_author)
+            post.save()
+            return HttpResponseRedirect(reverse('blog:post_detail',args=([post.id])))
+        else:
+            post = Post.objects.create(title=post_title,subtitle=post_subtitle,content=post_content,author=post_author)
+            post.save()
+            return HttpResponseRedirect(reverse('blog:post_detail',args=([post.id])))
+    else:
+        return render(request,"blog/postcreate.html")    
