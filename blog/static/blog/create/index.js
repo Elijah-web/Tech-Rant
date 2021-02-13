@@ -17,15 +17,17 @@ const editor = new EditorJS({
    }
 }
 );
+
 function myFunction(){
   editor.save().then((output)=>{
     console.log('Data: ',output);
-    var json_me = JSON.stringify(output)
-    //document.getElementById("demo").innerHTML = json_me;
-    // send the string to the server\
-    var content = document.getElementById("content");
+    var json_me = JSON.stringify(output);
+    // document.getElementById("data").innerHTML = json_me;
+    // send the string to the server\0
+    var content = document.getElementById("y");
     content.value = json_me;
-    return true;
+    document.getElementById("data").innerHTML = content.value;
+    return false
   }).catch((error)=>{
   console.log('Saving failed:',error)
   });
