@@ -25,7 +25,7 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           {% if post.publish %}<p hidden></p>{%else%}<p class="small text-danger">This post is not officially published by <a href="{% url 'blog:blog_home'%}">Tech Rant</a>. It is just a draft.</p>{% endif %}
-          <div style="font-size: 20px;" id="thecontent">
+          <div id="thecontent">
             <p hidden id="json">{{post.content}}</p>
           </div>
           <hr>
