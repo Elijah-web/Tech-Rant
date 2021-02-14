@@ -18,7 +18,7 @@
 </header>
 <div class="container" id="contact_form">
 	<h2>Add Blog Post</h2>
-  <p class="text-secondary text-center">After you save your super awesome blog post, it will be reviewed by the team at Tech Rant and it will be published if it meets our standards. Thank you for writing with Tech Rant</p>
+  <p class="text-secondary text-center small">After you save your super awesome blog post, it will be reviewed by the team at Tech Rant and it will be published if it meets our standards. Thank you for writing with Tech Rant</p>
   <form name="contact" action="{% url 'blog:create'%}" method="post" enctype="multipart/form-data">
   	{% csrf_token %}
     <fieldset>
