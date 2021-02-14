@@ -16,26 +16,26 @@
   </div>
 </div>
 </header>
-<div class="container">
-<h2>Add Blog Post</h2>
-<form method="post" onsubmit="myFunction()" action="{% url 'blog:create'%}" enctype="multipart/form-data">
-	{% csrf_token %}
-<div class="form-group">
-  <label for="email">Title:</label>
-  <input type="text" class="form-control" id="email" placeholder="Enter title" name="title">
-</div>
-<div class="form-group">
-  <label for="x">Subtitle:</label>
-  <input type="text" class="form-control" id="x" placeholder="Enter Subtitle" name="subtitle">
-</div>
-<div class="form-group">
-  <label for="y">Content:</label>
-  <input disabled="true" type="text" class="form-control" id="y" value =" " placeholder="Enter the content below. Press + for editing options" name="content">
-</div>
-<div id="editorjs"></div>
-<div id="draft"></div>
-<button type="submit" class="btn btn-primary">Save Post</button>
-</form> 
+<div class="contact-form container">
+	<h2>Add Blog Post</h2>
+		<form enctype="multipart/form-data">
+				{% csrf_token %}
+			<div class="form-group">
+			  <label for="email">Title:</label>
+			  <input required type="text" class="form-control" id="email" placeholder="Enter title" name="title">
+			</div>
+			<div class="form-group">
+			  <label for="x">Subtitle:</label>
+			  <input required type="text" class="form-control" id="x" placeholder="Enter Subtitle" name="subtitle">
+			</div>
+			<div class="form-group">
+			  <label for="y">Content:</label>
+			  <input disabled="true" type="text" class="form-control" id="y" value =" " placeholder="Enter the content below. Press + for editing options" name="content">
+			</div>
+			<div id="editorjs"></div>
+			<div id="draft"></div>
+			<button type="submit" class="btn btn-primary">Save Post</button>
+		</form> 
 <p id="data"></p>
 </div>
 <script src="{% static 'blog/create/editor.js'%}"></script>
