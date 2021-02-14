@@ -22,7 +22,7 @@ class AllPostsView(generic.ListView):
 
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
-        context['posts'] = Post.objects.filter(publish=true)
+        context['posts'] = Post.objects.filter(publish=True)
         return context
 
 
