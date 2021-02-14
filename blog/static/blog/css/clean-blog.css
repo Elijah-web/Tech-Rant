@@ -469,3 +469,7 @@ form.example::after {
   /*height: 600px;*/
   width: 100%;
 }
+
+#thecontent p{
+  font-size: 20px;
+}
