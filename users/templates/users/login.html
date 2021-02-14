@@ -36,10 +36,18 @@
         </form>
         <div class="border-top pt-3">
             <small class="text-muted">
-                Don't Have An Account? <a class="ml-2" href="{% url 'register' %}">Sign Up Now</a>
+                Don't Have An Account? <a class="ml-2" onclick="openwindow()" href="#">Sign Up Now</a>
             </small>
         </div>
       </div>
     </div>
   </div>
+  <script type="text/javascript">
+  function openwindow()
+   {
+      my_window = window.open("{% url 'register'%}",
+       "mywindow","status=1,width=700,height=400");
+      my_window.alert("After registering please close this window and login with your new account");
+   }
+  </script>
 {% endblock content %}

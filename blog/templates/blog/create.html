@@ -16,27 +16,37 @@
   </div>
 </div>
 </header>
-<div class="contact-form container">
+<div class="container" id="contact_form">
 	<h2>Add Blog Post</h2>
-		<form enctype="multipart/form-data">
-				{% csrf_token %}
-			<div class="form-group">
-			  <label for="email">Title:</label>
-			  <input required type="text" class="form-control" id="email" placeholder="Enter title" name="title">
-			</div>
-			<div class="form-group">
-			  <label for="x">Subtitle:</label>
-			  <input required type="text" class="form-control" id="x" placeholder="Enter Subtitle" name="subtitle">
-			</div>
-			<div class="form-group">
-			  <label for="y">Content:</label>
-			  <input disabled="true" type="text" class="form-control" id="y" value =" " placeholder="Enter the content below. Press + for editing options" name="content">
-			</div>
-			<div id="editorjs"></div>
-			<div id="draft"></div>
-			<button type="submit" class="btn btn-primary">Save Post</button>
-		</form> 
-<p id="data"></p>
+  <p class="text-secondary text-center">After you save your super awesome blog post, it will be reviewed by the team at Tech Rant and it will be published if it meets our standards. Thank you for writing with Tech Rant</p>
+  <form name="contact" action="{% url 'blog:create'%}" method="post" enctype="multipart/form-data">
+  	{% csrf_token %}
+    <fieldset>
+      <div class="form-group">
+      <label for="name">Title</label>
+      <input type="text" name="title" id="name" minlength="3" placeholder="Enter title" class="form-control" required/>
+      </div>
+       
+      <div class="form-group">
+      <label for="email" id="email_label">Subtitle</label>
+      <input required type="text" name="subtitle" id="email" placeholder="Enter Subtitle" class="form-control"/>
+      </div>
+      
+      <div class="form-group">
+      <label for="image" id="phone_label">Post Header Image</label>
+      <input required type="file" name="image" id="img" class="form-control">
+      </div>
+
+      <div class="form-group">
+      <label for="phone" id="phone_label">Content</label>
+      <input type="text" name="content" id="y" class="form-control" placeholder="Enter the content below &darr; Hit the &plus; for more editing options"/>
+      </div>
+      <p class="text-secondary text-center small">Click me &darr; to start writing</p>
+		<div id="editorjs"></div>
+		<div id="draft"></div>
+		<button type="submit" onclick="myFunction();" class="btn btn-primary">Save Post</button>
+    </fieldset>
+  </form>
 </div>
 <script src="{% static 'blog/create/editor.js'%}"></script>
 <script src="{% static 'blog/create/header.js'%}"></script>
@@ -46,5 +56,41 @@
 <script src="{% static 'blog/create/delimeter.js'%}"></script>
 <script src="{% static 'blog/create/raw.js'%}"></script>
 <script src="{% static 'blog/create/edjsParser.js'%}"></script>
-<script src="{% static 'blog/create/index.js'%}"></script>
+<script type="text/javascript">
+
+const editor = new EditorJS({
+    holder: 'editorjs',
+/** 
+     * Available Tools list. 
+     * Pass Tool's class or Settings object for each Tool you want to use 
+     */
+   tools:{
+      raw:RawTool,
+       header:Header,
+       delimiter: Delimiter,
+       paragraph: {
+        class: Paragraph,
+        inlineToolbar: true,
+      },
+      embed: Embed,
+      image: SimpleImage,
+   }
+}
+);
+
+function myFunction(){
+  editor.save().then((output)=>{
+    console.log('Data: ',output);
+    var json_me = JSON.stringify(output);
+    // document.getElementById("data").innerHTML = json_me;
+    // send the string to the server\0
+    var content = document.getElementById("y");
+    content.value = json_me;
+    // document.getElementById("data").innerHTML = content.value;
+    return true
+  }).catch((error)=>{
+  console.log('Saving failed:',error)
+  });
+}
+</script>
 {% endblock %}

@@ -8,27 +8,37 @@ from django.contrib.auth.decorators import login_required
 from .models import Post,Comment, Contact
 # Create your views here.
 
-class HomeView(generic.ListView):
-	template_name = 'blog/home.html'
-	model = Post
-	context_object_name = 'posts'
-	
-    # def get_context_data(self, **kwargs):
-    #     # Call the base implementation first to get a context
-    #     context = super().get_context_data(**kwargs)
-    #     # Add in a QuerySet of all the books
-    #     context['title'] = "&C"
-    #     return context
+def homeview(request):
+    posts = Post.objects.filter(publish=True).order_by('-date_posted')[:5]
+    return render(request,'blog/home.html',{"posts":posts})
+
+
+
+class AllPostsView(generic.ListView):
+    template_name = 'blog/all.html'
+    ordering = ['-date_posted']
+    model = Post
+    context_object_name = 'posts'
+
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        context['posts'] = Post.objects.filter(publish=true)
+        return context
+
 
 def detailview(request,post_id):
     post = get_object_or_404(Post,pk=post_id)
-    comments = post.comment_set.all().order_by("-date_posted")
 
-    context = {
-        "post":post,
-        "comments":comments
-    }
-    return render(request,'blog/detail.html',context)
+    if post.publish:
+        comments = post.comment_set.all().order_by("-date_posted")
+
+        context = {
+            "post":post,
+            "comments":comments
+        }
+        return render(request,'blog/detail.html',context)
+    else :
+        return HttpResponseRedirect(reverse('blog:review'))
 
 def commentview(request,post_id):
     post = get_object_or_404(Post,pk=post_id)
@@ -68,16 +78,31 @@ def postcreateview(request):
         post_content = request.POST['content'];
         post_title = request.POST['title']
         post_subtitle = request.POST['subtitle']
+        image = request.FILES['image']
         post_author = request.user
 
         if post_author.is_superuser:
             publish = True
-            post = Post.objects.create(title=post_title,subtitle=post_subtitle,content=post_content,publish=publish,author=post_author)
+            post = Post.objects.create(title=post_title,subtitle=post_subtitle,content=post_content,publish=publish,author=post_author,image=image)
             post.save()
-            return HttpResponseRedirect(reverse('blog:post_detail',args=([post.id])))
+            return HttpResponseRedirect(reverse('blog:draft',args=([post.id])))
         else:
-            post = Post.objects.create(title=post_title,subtitle=post_subtitle,content=post_content,author=post_author)
+            post = Post.objects.create(title=post_title,subtitle=post_subtitle,content=post_content,author=post_author,image=image)
             post.save()
-            return HttpResponseRedirect(reverse('blog:post_detail',args=([post.id])))
+            return HttpResponseRedirect(reverse('blog:draft',args=([post.id])))
     else:
         return render(request,"blog/create.html")    
+
+
+def draftview(request,post_id):
+    post = get_object_or_404(Post,pk=post_id)
+    comments = post.comment_set.all().order_by("-date_posted")
+
+    context = {
+        "post":post,
+        "comments":comments
+    }
+    return render(request,'blog/detail.html',context)
+
+def reviewview(request):
+    return render(request,"blog/review.html")

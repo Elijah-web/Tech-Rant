@@ -1,0 +1,28 @@
+{% extends "blog/base.html" %}
+{% block content %}
+{% load static%}
+  <header class="masthead" style="height:100px; background-image: url('{%static 'blog/img/home-bg.jpg'%}')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <!-- <img style="height: 120px; width: 120px;" src="{% static 'blog/img/120px.png'%}"> -->
+            <!-- <h1>Tech Rant</h1>     -->
+            <!-- <span class="subheading">Screaming about technology daily</span> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+   <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+      	<h2 class="text-info">This blog post is being reviewed please wait for the team at Tech Rant to review the article after which it will be published.</h2>
+    </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
