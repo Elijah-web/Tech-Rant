@@ -78,7 +78,7 @@ def postcreateview(request):
         post_content = request.POST['content'];
         post_title = request.POST['title']
         post_subtitle = request.POST['subtitle']
-        image = request.FILES['image']
+        image = request.POST['image']
         post_author = request.user
 
         if post_author.is_superuser:
