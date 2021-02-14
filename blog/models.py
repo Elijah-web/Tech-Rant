@@ -6,9 +6,9 @@ from PIL import Image
 
 # Create your models here.
 class Post(models.Model):
-    title = models.CharField(max_length=200)
-    subtitle = models.CharField(max_length=200)
-    image = models.CharField(max_length=1000)
+    title = models.TextField()
+    subtitle = models.TextField()
+    image = models.TextField()
     content = models.TextField()
     publish = models.BooleanField(default=False)
     date_posted = models.DateTimeField(default=timezone.now)
