@@ -24,10 +24,10 @@
     	{% for post in posts%}
       <div class="post-preview">
         <a href="{% url 'blog:post_detail' post.id%}">
-          <h3 class="post-title">
+          <h4 class="post-title">
             {{post.title}}
-          </h3>
-          <p class="post-subtitle">
+          </h4>
+          <p class="small post-subtitle">
             {{post.subtitle}}
           </p>
         </a>

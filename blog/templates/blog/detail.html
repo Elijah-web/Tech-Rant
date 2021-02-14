@@ -9,7 +9,7 @@
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
             <h1 >{{post.title}}</h1>
-            <p class="subheading">{{post.subtitle}}</p>
+            <p class="small">{{post.subtitle}}</p>
             <span class="small meta">Posted by
               <a href="#">{{post.author.username}}</a>
               on {{ post.date_posted|date:"F d, Y" }}</span>
@@ -24,7 +24,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          {% if post.publish %}<p hidden></p>{%else%}<p class="text-danger">This post is not officially published by <a href="{% url 'blog:blog_home'%}">Tech Rant</a>. It is just a draft.</p>{% endif %}
+          {% if post.publish %}<p hidden></p>{%else%}<p class="small text-danger">This post is not officially published by <a href="{% url 'blog:blog_home'%}">Tech Rant</a>. It is just a draft.</p>{% endif %}
           <div style="font-size: 20px;" id="thecontent">
             <p hidden id="json">{{post.content}}</p>
           </div>
