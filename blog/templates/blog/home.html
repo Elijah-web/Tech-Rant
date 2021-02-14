@@ -10,7 +10,7 @@
           <div class="site-heading">
             <img style="height: 120px; width: 120px;" src="{% static 'blog/img/120px.png'%}">
             <h1>Tech Rant</h1>    
-            <span class="subheading">Screaming about technology daily</span>
+            <span class="small subheading">Screaming about technology daily</span>
           </div>
         </div>
       </div>
@@ -24,12 +24,12 @@
     	{% for post in posts%}
       <div class="post-preview">
         <a href="{% url 'blog:post_detail' post.id%}">
-          <h2 class="small post-title">
+          <h3 class="post-title">
             {{post.title}}
-          </h2>
-          <h3 class="small post-subtitle">
-            {{post.subtitle}}
           </h3>
+          <p class="post-subtitle">
+            {{post.subtitle}}
+          </p>
         </a>
         <p class="small post-meta">Posted by
           <a href="#">{{post.author.username}}</a>
