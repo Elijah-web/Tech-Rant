@@ -58,13 +58,13 @@ def aboutmeview(request):
         email = request.POST['email']
         subject = request.POST['subject']
 
-        # send_mail(
-        #     subject,
-        #     message+"\n Sender's email: "+email,
-        #     'elijahokellp@gmail.com',
-        #     ['elijahokello90@gmail.com'],
-        #     fail_silently=False,
-        #     )
+        send_mail(
+            subject,
+            message+"\n Sender's email: "+email,
+            'elijahokellp@gmail.com',
+            ['elijahokello90@gmail.com'],
+            fail_silently=False,
+            )
         contact = Contact.objects.create(email=email,message=message,subject=subject)
         contact.save()
         messages.success(request, f'Your message has been received successfully')
@@ -89,6 +89,13 @@ def postcreateview(request):
         else:
             post = Post.objects.create(title=post_title,subtitle=post_subtitle,content=post_content,author=post_author,image=image)
             post.save()
+            send_mail(
+                'Post Has Been Created',
+                'Please review the blog post',
+                'elijahokellp@gmail.com',
+                ['elijahokello90@gmail.com'],
+                fail_silently=False,
+                )
             return HttpResponseRedirect(reverse('blog:draft',args=([post.id])))
     else:
         return render(request,"blog/create.html")    
