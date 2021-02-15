@@ -33,6 +33,7 @@
   	font-family: 'Quicksand', sans-serif;	
   	}
   </style>
+  <script async src="https://cse.google.com/cse.js?cx=54c358f2ed8d23de9"></script>
 </head>
 <body>
   <!-- Navigation -->
@@ -58,13 +59,9 @@
           <li class ="nav-item">
             <a class="nav-link" href="{% url 'profile'%}">Profile</a>
           </li>
-<!--           <li class="nav-item">
-           <form class="form-inline" action="" method="POST">
-            {% csrf_token %}
-              <input class="form-control mr-sm-2" name="q" type="text" placeholder="Search posts...">
-              <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
-            </form>
-          </li> -->
+          <li class="nav-item">
+            <div class="gcse-search"></div>
+          </li>
         </ul>
       </div>
     </div>
